@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "key": "$base-font-family",
+      "value": "\"Poppins\", sans-serif"
+    },
+    {
+      "key": "$base-accent",
+      "value": "#4098D7"
+    },
+    {
+      "key": "$texteditor-bg",
+      "value": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "key": "$texteditor-hover-bg",
+      "value": "rgba(0, 0, 0, 0.03)"
+    },
+    {
+      "key": "$base-success",
+      "value": "rgba(44, 177, 188, 1)"
+    }
+  ],
+  "baseTheme": "material.blue.light",
+  "assetsBasePath": "../../../node_modules/devextreme/dist/css/",
+  "outputColorScheme": "base",
+  "base": true
+}

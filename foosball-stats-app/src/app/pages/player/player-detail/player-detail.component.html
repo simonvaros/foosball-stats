@@ -1,0 +1,117 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <i class="icon-drop"></i> {{ playerDetail.name }}
+    </div>
+    <div class="card-body">
+      <div>Total events played: {{ playerDetail.playedEvents }}</div>
+      <div>First event played: {{ playerDetail.yearOfFirstEvent }}</div>
+
+      <div>
+        First places: {{ playerDetail.firstPlacesCount }} ({{
+          playerDetail.firstPlacePercentage | number: "1.2-2"
+        }}%)
+      </div>
+      <div>
+        Second places: {{ playerDetail.secondPlacesCount }} ({{
+          playerDetail.secondPlacePercentage | number: "1.2-2"
+        }}%)
+      </div>
+      <div>
+        Third places: {{ playerDetail.thirdPlacesCount }} ({{
+          playerDetail.thirdPlacePercentage | number: "1.2-2"
+        }}%)
+      </div>
+      <div>
+        Top 3:
+        {{
+          playerDetail.firstPlacesCount +
+            playerDetail.secondPlacesCount +
+            playerDetail.thirdPlacesCount
+        }}
+        ({{ playerDetail.top3Percentage | number: "1.2-2" }}%)
+      </div>
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title> Event results </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <table
+            mat-table
+            [dataSource]="playerDetail.eventTeams"
+            class="mat-elevation-z8"
+          >
+            <ng-container matColumnDef="eventName">
+              <th mat-header-cell *matHeaderCellDef>Event name</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.event.name }} ({{ element.event.description }})
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="eventDate">
+              <th mat-header-cell *matHeaderCellDef>Date</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.event.date }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="ranking">
+              <th mat-header-cell *matHeaderCellDef>Ranking</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.ranking }} / {{ element.event.teamsCount }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="player1">
+              <th mat-header-cell *matHeaderCellDef>Player 1</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.team.players[0].name }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="player2">
+              <th mat-header-cell *matHeaderCellDef>Player 2</th>
+              <td mat-cell *matCellDef="let element">
+                {{
+                  element.team.players[1] ? element.team.players[1].name : ""
+                }}
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="eventsColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: eventsColumns"></tr>
+          </table>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title> Teams</mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <table
+            mat-table
+            [dataSource]="playerDetail.teams"
+            class="mat-elevation-z8"
+          >
+            <ng-container matColumnDef="player1">
+              <th mat-header-cell *matHeaderCellDef>Player 1</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.players[0].name }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="player2">
+              <th mat-header-cell *matHeaderCellDef>Player 2</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.players[1]?.name }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="playedEvents">
+              <th mat-header-cell *matHeaderCellDef>Played events</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.eventTeams.length }}
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="teamsColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: teamsColumns"></tr>
+          </table>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+</div>
