@@ -1,7 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Player } from 'src/app/shared/models/player';
 import { PlayerService } from 'src/app/shared/services/player.service';
@@ -13,39 +10,45 @@ import { PlayerService } from 'src/app/shared/services/player.service';
 })
 export class PlayersListComponent implements OnInit {
   players: Player[];
-  dataSource: MatTableDataSource<Player>;
-  displayedColumns: string[] = [
-    'name',
-    'playedEvents',
-    'firstPlacesCount',
-    'firstPlacePercentage',
-    'secondPlacesCount',
-    'secondPlacePercentage',
-    'thirdPlacesCount',
-    'thirdPlacePercentage',
-    'top3percentage',
-    'yearOfFirstEvent',
-  ];
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  showRelevant = false;
 
   constructor(private _playerService: PlayerService, private _router: Router) {
-    this.dataSource = new MatTableDataSource<Player>();
+    this.displayFirstPlacePercentage =
+      this.displayFirstPlacePercentage.bind(this);
+    this.displaySecondPlacePercentage =
+      this.displaySecondPlacePercentage.bind(this);
+    this.displayThirdPlacePercentage =
+      this.displayThirdPlacePercentage.bind(this);
+    this.displayTop3Percentage = this.displayTop3Percentage.bind(this);
   }
 
   ngOnInit(): void {
     this._playerService.getPlayers().subscribe((p) => {
       this.players = p;
-      this.dataSource.data = p;
     });
   }
-  ngAfterViewInit() {
-    console.log(this.sort);
-    this.dataSource.sort = this.sort;
+
+  openPlayerDetail(e: any): void {
+    this._router.navigate(['/player/detail/' + e.data.id]);
   }
 
-  openPlayerDetail(row: any): void {
-    this._router.navigate(['/player/detail/' + row.id]);
+  displayFirstPlacePercentage(e: any): string {
+    return this.displayPercent(this.showRelevant ? e.relevantFirstPlacePercentage : e.firstPlacePercentage);
+  }
+
+  displaySecondPlacePercentage(e: any): string {
+    return this.displayPercent(this.showRelevant ? e.relevantSecondPlacePercentage : e.secondPlacePercentage);
+  }
+
+  displayThirdPlacePercentage(e: any): string {
+    return this.displayPercent(this.showRelevant ? e.relevantThirdPlacePercentage : e.thirdPlacePercentage);
+  }
+
+  displayTop3Percentage(e: any): string {
+    return this.displayPercent(this.showRelevant ? e.relevantTop3Percentage : e.top3Percentage);
+  }
+
+  private displayPercent(data: number): string {
+    return `${data.toPrecision(4)} %`;
   }
 }

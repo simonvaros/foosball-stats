@@ -1,3 +1,4 @@
+import { EventTeam } from "./eventTeam";
 import { EventType } from "./eventType";
 
 export interface Event {
@@ -7,4 +8,6 @@ export interface Event {
   type: EventType;
   date: Date;
   teamsCount: number;
+  teams: EventTeam[];
+  relevantForRanking: boolean;
 }

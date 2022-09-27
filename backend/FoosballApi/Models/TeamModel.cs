@@ -7,6 +7,7 @@ namespace FoosballApi.Models
     public class TeamModel
     {
         public int Id { get; set; }
+        public int EventsCount { get; set; }
         public List<PlayerModel> Players { get; set; }
         public List<EventTeamModel> EventTeams { get; set; }
 
@@ -14,10 +15,12 @@ namespace FoosballApi.Models
         {
             Id = entity.Id;
             Players = entity.Players.Select(p => new PlayerModel(p)).ToList();
+            EventsCount = entity.EventTeams.Count;
 
             if (setEventTeams)
             {
-                EventTeams = entity.EventTeams.Select(et => new EventTeamModel(et)).ToList();
+                EventTeams = entity.EventTeams.OrderByDescending(et => et.Event.Date)
+                    .Select(et => new EventTeamModel(et)).ToList();
             }
         }
     }

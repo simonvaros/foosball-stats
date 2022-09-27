@@ -40,7 +40,7 @@ namespace FoosballApi.Controllers
                 .Include(e => e.Event).Where(et => et.Team.Players.FirstOrDefault(p => p.Id == id) != null);
 
             var playerDetailModel =
-                new PlayerDetailModel(player, eventTeams.Select(et => new EventTeamModel(et)).ToList());
+                new PlayerDetailModel(player, eventTeams.Select(et => new EventTeamModel(et, true)).ToList());
 
             return Ok(playerDetailModel);
         }

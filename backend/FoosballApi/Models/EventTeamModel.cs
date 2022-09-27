@@ -10,11 +10,11 @@ namespace FoosballApi.Models
         
         public TeamModel Team { get; set; }
 
-        public EventTeamModel(EventTeam entity)
+        public EventTeamModel(EventTeam entity, bool setEvent = true)
         {
             Id = entity.Id;
             Ranking = entity.Ranking;
-            Event = new EventModel(entity.Event);
+            Event = setEvent ? new EventModel(entity.Event) : null;
             Team = new TeamModel(entity.Team, false);
         }
     }

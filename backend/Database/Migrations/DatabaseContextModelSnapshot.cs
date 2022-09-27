@@ -37,6 +37,9 @@ namespace Database.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<bool>("RelevantForRanking")
+                        .HasColumnType("boolean");
+
                     b.Property<int>("TeamsCount")
                         .HasColumnType("integer");
 
@@ -94,6 +97,30 @@ namespace Database.Migrations
 
                     b.Property<int>("PlayedEvents")
                         .HasColumnType("integer");
+
+                    b.Property<int>("PlayedRelevantEvents")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("RelevantFirstPlacePercentage")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("RelevantFirstPlacesCount")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("RelevantSecondPlacePercentage")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("RelevantSecondPlacesCount")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("RelevantThirdPlacePercentage")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("RelevantThirdPlacesCount")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("RelevantTop3Percentage")
+                        .HasColumnType("double precision");
 
                     b.Property<double>("SecondPlacePercentage")
                         .HasColumnType("double precision");

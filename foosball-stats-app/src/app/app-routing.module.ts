@@ -13,13 +13,23 @@ const routes: Routes = [
       import('./pages/player/player.module').then((m) => m.PlayerModule),
   },
   {
+    path: 'event',
+    loadChildren: () =>
+      import('./pages/event/event.module').then((m) => m.EventModule),
+  },
+  {
+    path: 'team',
+    loadChildren: () =>
+      import('./pages/team/team.module').then((m) => m.TeamModule),
+  },
+  {
     path: '**',
     redirectTo: 'home',
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: false })],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule],
   declarations: [HomeComponent],
 })

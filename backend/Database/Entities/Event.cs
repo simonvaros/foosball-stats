@@ -14,5 +14,6 @@ namespace Database.Entities
         public DateTimeOffset Date { get; set; }
         public int TeamsCount { get; set; }
         public List<EventTeam> Teams { get; set; }
+        public bool RelevantForRanking { get; set; }
     }
 }

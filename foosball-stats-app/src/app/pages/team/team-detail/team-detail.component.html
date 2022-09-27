@@ -1,0 +1,44 @@
+<div class="detail-card" *ngIf="teamDetail">
+  <div class="header">
+    <div class="heading">
+      <div class="name">
+        {{ teamDetail.players[0].name }} - {{ teamDetail.players[1].name }}
+      </div>
+    </div>
+  </div>
+  <div class="events">
+    <dx-data-grid
+      [dataSource]="teamDetail.eventTeams"
+      [columnAutoWidth]="true"
+      [showRowLines]="true"
+      [showBorders]="false"
+      [hoverStateEnabled]="true"
+      [columnHidingEnabled]="true"
+      [wordWrapEnabled]="true"
+    >
+      <dxo-load-panel [enabled]="false"></dxo-load-panel>
+      <dxi-column
+        dataField="event.name"
+        caption="Name"
+        dataType="string"
+      ></dxi-column>
+
+      <dxi-column
+        dataField="event.description"
+        caption="Description"
+        dataType="string"
+      ></dxi-column>
+      <dxi-column
+        dataField="event.date"
+        caption="Date"
+        dataType="datetime"
+        format="dd. MM. yyyy"
+      ></dxi-column>
+      <dxi-column
+        dataField="ranking"
+        caption="Ranking"
+        dataType="number"
+      ></dxi-column>
+    </dx-data-grid>
+  </div>
+</div>

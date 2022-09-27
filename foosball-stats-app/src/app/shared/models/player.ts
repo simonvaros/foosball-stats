@@ -10,5 +10,13 @@ export interface Player {
   thirdPlacesCount: number;
   thirdPlacePercentage: number;
   top3Percentage: number;
+  playedRelevantEvents: number;
+  relevantFirstPlacesCount: number;
+  relevantFirstPlacePercentage: number;
+  relevantSecondPlacesCount: number;
+  relevantSecondPlacePercentage: number;
+  relevantThirdPlacesCount: number;
+  relevantThirdPlacePercentage: number;
+  relevantTop3Percentage: number;
   yearOfFirstEvent: number;
 }

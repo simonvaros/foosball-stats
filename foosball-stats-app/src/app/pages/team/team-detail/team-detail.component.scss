@@ -1,0 +1,27 @@
+@import "../../../../variables.scss";
+
+.detail-card {
+  margin-top: 20px;
+  background-color: white;
+  padding: 30px;
+  border-radius: 5px;
+}
+
+.header {
+  margin-bottom: 20px;
+  padding-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  border-bottom: 1px solid $blue-grey-100;
+
+  .heading {
+    display: flex;
+    flex-direction: column;
+
+    .name {
+      font-size: 20px;
+      font-weight: 600;
+    }
+  }
+}

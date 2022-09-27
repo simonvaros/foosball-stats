@@ -1,75 +1,81 @@
-<div class="card">
-  <div class="card-header"><i class="icon-drop"></i> Players</div>
-  <div class="card-body">
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-      </ng-container>
-      <ng-container matColumnDef="playedEvents">
-        <th mat-header-cell *matHeaderCellDef>Played events</th>
-        <td mat-cell *matCellDef="let element">{{ element.playedEvents }}</td>
-      </ng-container>
-      <ng-container matColumnDef="firstPlacesCount">
-        <th mat-header-cell *matHeaderCellDef>First places</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.firstPlacesCount }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="firstPlacePercentage">
-        <th mat-header-cell *matHeaderCellDef>First place %</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.firstPlacePercentage | number: "1.2-2" }}%
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="secondPlacesCount">
-        <th mat-header-cell *matHeaderCellDef>Second places</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.secondPlacesCount }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="secondPlacePercentage">
-        <th mat-header-cell *matHeaderCellDef>Second place %</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.secondPlacePercentage | number: "1.2-2" }}%
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="thirdPlacesCount">
-        <th mat-header-cell *matHeaderCellDef>Third places</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.thirdPlacesCount }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="thirdPlacePercentage">
-        <th mat-header-cell *matHeaderCellDef>Third place %</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.thirdPlacePercentage | number: "1.2-2" }}%
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="top3percentage">
-        <th mat-header-cell *matHeaderCellDef>TOP 3 %</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.top3Percentage | number: "1.2-2" }}%
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="yearOfFirstEvent">
-        <th mat-header-cell *matHeaderCellDef>Year of first event</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.yearOfFirstEvent }}
-        </td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr
-        mat-row
-        *matRowDef="let row; columns: displayedColumns"
-        (click)="openPlayerDetail(row)"
-      ></tr>
-    </table>
-    <mat-paginator
-      [pageSizeOptions]="[20, 50, 100]"
-      showFirstLastButtons
-      aria-label="Select page of periodic elements"
-    >
-    </mat-paginator>
-  </div>
+<div class="heading">Players</div>
+<div class="switch-with-label">
+  <dx-switch [(value)]="showRelevant"></dx-switch><span>Show relevant</span>
 </div>
+<dx-data-grid
+  [dataSource]="players"
+  [remoteOperations]="true"
+  [columnAutoWidth]="true"
+  [showRowLines]="true"
+  [showBorders]="false"
+  [hoverStateEnabled]="true"
+  [columnHidingEnabled]="true"
+  [wordWrapEnabled]="true"
+  (onRowDblClick)="openPlayerDetail($event)"
+>
+  <dxo-load-panel [enabled]="false"></dxo-load-panel>
+  <dxo-filter-row [visible]="true"></dxo-filter-row>
+  <dxo-selection mode="single"></dxo-selection>
+  <dxo-paging [pageSize]="25"></dxo-paging>
+  <dxo-pager
+    [showPageSizeSelector]="true"
+    [allowedPageSizes]="[10, 25, 50, 100]"
+  ></dxo-pager>
+  <dxo-sorting mode="multiple"></dxo-sorting>
+
+  <dxi-column dataField="id" [visible]="false"></dxi-column>
+
+  <dxi-column dataField="name" caption="Name" dataType="string"></dxi-column>
+
+  <dxi-column
+    [dataField]="showRelevant ? 'playedRelevantEvents' : 'playedEvents'"
+    caption="Played events"
+    dataType="number"
+  ></dxi-column>
+  <dxi-column
+    [dataField]="showRelevant ? 'relevantFirstPlacesCount' : 'firstPlacesCount'"
+    caption="First places"
+    dataType="number"
+  ></dxi-column>
+  <dxi-column
+    caption="First places %"
+    dataType="number"
+    [calculateDisplayValue]="displayFirstPlacePercentage"
+    calculateSortValue="firstPlacePercentage"
+  ></dxi-column>
+  <dxi-column
+    [dataField]="
+      showRelevant ? 'relevantSecondPlacesCount' : 'secondPlacesCount'
+    "
+    caption="Second places"
+    dataType="number"
+  ></dxi-column>
+  <dxi-column
+    caption="Second places %"
+    dataType="number"
+    [calculateDisplayValue]="displaySecondPlacePercentage"
+    calculateSortValue="secondPlacePercentage"
+  ></dxi-column>
+  <dxi-column
+    [dataField]="showRelevant ? 'relevantThirdPlacesCount' : 'thirdPlacesCount'"
+    caption="Third places"
+    dataType="number"
+  ></dxi-column>
+  <dxi-column
+    caption="Third places %"
+    dataType="number"
+    [calculateDisplayValue]="displayThirdPlacePercentage"
+    calculateSortValue="thirdPlacePercentage"
+  ></dxi-column>
+  <dxi-column
+    caption="TOP 3 %"
+    dataType="number"
+    [calculateDisplayValue]="displayTop3Percentage"
+    calculateSortValue="top3Percentage"
+  ></dxi-column>
+  <dxi-column
+    dataField="yearOfFirstEvent"
+    caption="Year of first event"
+    dataType="number"
+  ></dxi-column>
+</dx-data-grid>
